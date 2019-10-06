@@ -76,8 +76,10 @@ void DLInitList (tDLList *L) {
 ** že neinicializované proměnné mají nedefinovanou hodnotu.
 **/
     
-	
- solved = FALSE;                   /* V případě řešení, smažte tento řádek! */
+    L->Act = NULL;
+    L->First = NULL;
+    L->Last = NULL;
+
 }
 
 void DLDisposeList (tDLList *L) {
@@ -86,9 +88,26 @@ void DLDisposeList (tDLList *L) {
 ** se nacházel po inicializaci. Rušené prvky seznamu budou korektně
 ** uvolněny voláním operace free. 
 **/
+
+    // If the list is empty don't do anything
+    if (L->Last == NULL)
+        return;
+    
+    L->Act = L->Last;
+
+    while (L->Act->lptr != NULL)
+    {
+        tDLElemPtr tmp_elem = L->Act->lptr;
+        free(L->Act);
+        L->Act = tmp_elem;
+    }
+
+    // Free the last element
+    free(L->Act);
+    // Tell the list that it's empty
+    L->First = NULL;
+    L->Last = NULL;
 	
-	
- solved = FALSE;                   /* V případě řešení, smažte tento řádek! */
 }
 
 void DLInsertFirst (tDLList *L, int val) {
@@ -98,8 +117,26 @@ void DLInsertFirst (tDLList *L, int val) {
 ** volá funkci DLError().
 **/
 	
-	
- solved = FALSE;                   /* V případě řešení, smažte tento řádek! */
+    tDLElemPtr first_elem = (tDLElemPtr) malloc(sizeof(struct tDLElem));
+    if (first_elem == NULL)
+    {
+        DLError;
+    }
+    
+    first_elem->data = val;
+    first_elem->lptr = NULL;
+    first_elem->rptr = L->First;
+
+    if (L->First != NULL)
+    {
+        L->First->lptr = first_elem;
+    }
+    else
+    {
+        L->Last = first_elem;
+    }
+    L->First = first_elem;
+    
 }
 
 void DLInsertLast(tDLList *L, int val) {
