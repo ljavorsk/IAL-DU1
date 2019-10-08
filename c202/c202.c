@@ -78,8 +78,9 @@ int stackEmpty ( const tStack* s ) {
 ** Funkci implementujte jako jediný příkaz. Vyvarujte se zejména konstrukce
 ** typu "if ( true ) b=true else b=false".
 */
-	/* MSB is with empty stack 1, and that's making the magic.
-	   -1 because you cant shift all the bits (Warning). 
+	/* The -1 ('top' value, when stack is empty) have MSB equal to 1,
+	   and that's making the magic. Shifting the bits until the MSB (sign) bit
+	   ensures that all positive numbers will be "0", and negative "-1".
 	   Returns -1 when empty stack */
 	return (s->top >> (8 * sizeof(int) - 1));
 }
