@@ -48,11 +48,24 @@ int solved;
 */
 void untilLeftPar ( tStack* s, char* postExpr, unsigned* postLen ) {
 
-  char tmp_stack_top_value = s->arr[s->top];
+  char tmp_stack_top;
 
-  while (tmp_stack_top_value){
+  while (stackEmpty(s) != -1)
+  {
+    stackTop(s, &tmp_stack_top);  // Get the top of the stack
 
+    if (tmp_stack_top != '(')
+    {
+      stackPop(s);  // stackTop doesn't pop, so we need to do it now
+      postExpr[*postLen] = tmp_stack_top; // Writes the current stack's top value
+      (*postLen)++;
+      stackTop(s, &tmp_stack_top);  // Get a new top
+    }
+
+    stackPop(s);  // Pop the '('
+    
   }
+  
 }
 
 /*
