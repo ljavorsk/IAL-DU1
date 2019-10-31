@@ -8,8 +8,8 @@ CFLAGS=-Wall -std=c99 -pedantic -lm -I$(C202PATH)
 
 all: $(PROGS)
 
-$(PRJ)-test: $(PRJ).c $(PRJ)-test.c $(C202PATH)c202.c
-	$(CC) $(CFLAGS) -o $@ $(PRJ).c $(PRJ)-test.c $(C202PATH)c202.c
+$(PRJ)-test: $(PRJ).c $(PRJ)-advanced-test.c $(C202PATH)c202.c
+	$(CC) $(CFLAGS) -o $@ $(PRJ).c $(PRJ)-advanced-test.c $(C202PATH)c202.c
 
 clean:
 	rm -f *.o *.out $(PROGS)
